@@ -1,0 +1,49 @@
+/* Styles pour votre page */
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom, #BAEDF1, #4682B4);
+    background-size: 100%;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+header {
+    background: linear-gradient(to right, #0f3057, #0f3057, #0575e6); /* Dégradé de bleu */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+}
+
+#podcast-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#podcast-list li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #0575e6; /* Bleu vif pour les liens */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media only screen and (max-width: 600px) {
+    header {
+        padding: 15px;
+    }
+}
