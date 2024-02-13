@@ -1,27 +1,28 @@
-  @media only screen and (max-width: 600px) {
-  h1 {
-    font-size: 24px;
+@media only screen and (max-width: 600px) {
+    h1 {
+      font-size: 24px;
+    }
+  
+  header {
+    top : 4px;
+    text-align: center;
+    position: absolute;
   }
 
-  .dashboard-item {
-    max-width: 100%;
+
+    input {
+      width: 80%;
+    }
+  
+    button {
+      margin-top: 10px;
+    }
   }
-
-  input {
-    width: 80%;
+  
+  html, body {
+    height: 100%;
+    margin: 0;
   }
-
-  button {
-    margin-top: 10px;
-  }
-}
-
-basg {
-	left: 3px;
-	bottom: 3px;
-	position: absolute;
-}
-
 
       body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

@@ -1,27 +1,4 @@
-  @media only screen and (max-width: 600px) {
-  h1 {
-    font-size: 24px;
-  }
-
-  .dashboard-item {
-    max-width: 100%;
-  }
-
-  input {
-    width: 80%;
-  }
-
-  button {
-    margin-top: 10px;
-  }
-}
-
-basg {
-	left: 3px;
-	bottom: 3px;
-	position: absolute;
-}
-
+/* Styles pour votre page */
 html, body {
     height: 100%;
     margin: 0;
