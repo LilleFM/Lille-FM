@@ -1,58 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" sizes="192x192" href="Lille_FM_icon.ico" type="image/png" />
-    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Radio</title>
 </head>
 <body>
     <center><h1>Web Radio</h1></center>
+    <div id="currentSong"></div>
 
-    <br>
-
-    <lecteur>
-        <audio id="audioPlayer" controls autoplay>
-            <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
-            Votre navigateur ne supporte pas l'élément audio.
-        </audio>
-    </lecteur>
-
-    <div id="currentSong">
-        <!-- Ici s'affichera le titre de la chanson actuelle -->
-    </div>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Fonction pour récupérer le titre de la chanson actuelle
-        function getCurrentSong() {
-            // URL de l'API pour obtenir les informations sur la chanson actuelle
-            var apiUrl = 'http://109.169.76.26:10341/';
+        // Fonction pour extraire le titre de la chanson à partir du contenu HTML
+        async function getCurrentSong() {
+            try {
+                // Récupérer le contenu HTML de la page de la radio
+                const response = await fetch('https://lillefm.radio12345.com');
+                const html = await response.text();
 
-            // Faire une requête HTTP pour obtenir les informations sur la chanson
-            fetch(apiUrl)
-                .then(response => response.text())
-                .then(data => {
-                    // Afficher le titre de la chanson dans l'élément avec l'ID 'currentSong'
-                    document.getElementById('currentSong').innerText = data;
-                })
-                .catch(error => {
-                    console.error('Erreur lors de la récupération des informations sur la chanson :', error);
-                });
+                // Charger le contenu HTML dans Cheerio pour le manipuler facilement
+                const $ = cheerio.load(html);
+
+                // Extraire le titre de la chanson en fonction de la structure de la page de la radio
+                const currentSong = $('b:contains("Current Song:")').next().text().trim(); // Modifier le sélecteur en fonction de la structure HTML de la page de la radio
+
+                // Afficher le titre de la chanson sur la page
+                document.getElementById('currentSong').innerText = currentSong;
+            } catch (error) {
+                console.error('Erreur lors de la récupération du titre de la chanson actuelle :', error);
+            }
         }
 
-        // Appel de la fonction pour récupérer la chanson actuelle au chargement de la page
+        // Appeler la fonction pour récupérer le titre de la chanson au chargement de la page
         getCurrentSong();
-
-        // Rafraîchir toutes les 10 secondes pour obtenir la chanson actuelle
-        setInterval(getCurrentSong, 10000);
     </script>
 </body>
-    <style>
-        lecteur {
-            left: 42.5%;
-            bottom: 45%;
-            position: absolute;
-        }
-    </style>
 </html>
