@@ -6,50 +6,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Radio</title>
-    <style>
-        audio {
-            left: 42.5%;
-            bottom: 45%;
-            position: absolute;
-        }
-        #song-info {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
     <center><h1>Web Radio</h1></center>
 
     <br>
 
-    <audio controls autoplay id="audio-player">
-      <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
-      Votre navigateur ne supporte pas l'élément audio.
-    </audio>
+    <lecteur>
+        <audio controls autoplay>
+            <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
+            Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+    </lecteur>
 
-    <div id="song-info">Now Playing: Loading...</div>
+    <div id="song-info">Loading...</div> <!-- Container to display current song info -->
 
-    <script>
-        function fetchSongInfo() {
-            fetch('http://uk9freenew.listen2myradio.com:10341/admin.cgi')
-                .then(response => response.text())
-                .then(data => {
-                    // Extracting current song from the HTML response
-                    const currentSong = data.match(/Current Song: <\/font><\/td><td><font class=default><b>(.*?)<\/b>/)[1];
-                    // Updating the song info on the webpage
-                    document.getElementById('song-info').textContent = `Now Playing: ${currentSong}`;
-                })
-                .catch(error => {
-                    console.error('Error fetching song info:', error);
-                });
-        }
-
-        // Fetch song info initially when the page loads
-        fetchSongInfo();
-
-        // Fetch song info every 30 seconds to keep it updated
-        setInterval(fetchSongInfo, 30000); // 30 seconds
-    </script>
 </body>
+<style>
+    lecteur {
+        left: 42.5%;
+        bottom: 45%;
+        position: absolute;
+    }
+</style>
+<script>
+    function fetchSongInfo() {
+        fetch('https://lillefm.radio12345.com/index.php')
+            .then(response => response.text())
+            .then(data => {
+                // Extracting current song title from the HTML response
+                const titleStartIndex = data.indexOf('<h1>') + '<h1>'.length;
+                const titleEndIndex = data.indexOf('</h1>', titleStartIndex);
+                const currentSongTitle = data.substring(titleStartIndex, titleEndIndex);
+                // Updating the song info on the webpage
+                document.getElementById('song-info').textContent = `Now Playing: ${currentSongTitle}`;
+            })
+            .catch(error => {
+                console.error('Error fetching song info:', error);
+            });
+    }
+
+    // Fetch song info initially when the page loads
+    fetchSongInfo();
+
+    // Fetch song info every 30 seconds to keep it updated
+    setInterval(fetchSongInfo, 30000); // 30 seconds
+</script>
 </html>
+
