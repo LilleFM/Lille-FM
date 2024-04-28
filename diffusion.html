@@ -31,26 +31,9 @@
     <div id="song-info">Now Playing: Loading...</div>
 
     <script>
-        // Function to fetch current song info from the server
         function fetchSongInfo() {
             fetch('http://uk9freenew.listen2myradio.com:10341/admin.cgi')
                 .then(response => response.text())
                 .then(data => {
-                    // Extracting current song from the response
-                    const currentSong = data.match(/Current Song:\t(.+)/)[1];
-                    // Updating the song info on the webpage
-                    document.getElementById('song-info').textContent = `Now Playing: ${currentSong}`;
-                })
-                .catch(error => {
-                    console.error('Error fetching song info:', error);
-                });
-        }
-
-        // Fetch song info initially when the page loads
-        fetchSongInfo();
-
-        // Fetch song info every 30 seconds to keep it updated
-        setInterval(fetchSongInfo, 30000); // 30 seconds
-    </script>
-</body>
-</html>
+                    // Extracting current song from the HTML response
+                    const currentSong = data.match(/
