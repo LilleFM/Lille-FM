@@ -9,44 +9,24 @@
 </head>
 <body>
     <center><h1>Web Radio</h1></center>
+
     <br>
-    <div id="currentSong"></div>
 
-    <audio controls autoplay>
-        <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
-        Votre navigateur ne supporte pas l'élément audio.
-    </audio>
+<lecteur>
+<audio controls autoplay>
+  <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'élément audio.
+</audio>
+</lecteur>
     
-    <script>
-        function getCurrentSong() {
-            fetch('https://lillefm.radio12345.com')
-            .then(response => response.text())
-            .then(html => {
-                // Création d'un élément div pour faciliter le parsing du HTML
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-
-                // Récupération du contenu de la ligne 49
-                const currentSongLine = doc.querySelectorAll('body > table > tbody > tr:nth-child(14) > td:nth-child(2) > font > b')[0].textContent;
-
-                // Affichage du titre de la chanson dans la div #currentSong
-                document.getElementById('currentSong').textContent = currentSongLine;
-            })
-            .catch(error => console.error('Erreur lors de la récupération de la chanson actuelle :', error));
-        }
-
-        // Appeler la fonction getCurrentSong pour récupérer la chanson actuelle au chargement de la page
-        getCurrentSong();
-
-        // Actualiser la chanson actuelle toutes les 10 secondes
-        setInterval(getCurrentSong, 10000);
-    </script>
 </body>
-<style>
-    lecteur {
-        left: 42.5%;
-        bottom: 45%;
-        position: absolute;
-    }
-</style>
+    <style>
+        lecteur {
+            left: 42.5%;
+            bottom: 45%;
+            position: absolute;
+        }
+    </style>
 </html>
+
+
