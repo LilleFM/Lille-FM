@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" sizes="192x192" href="Lille_FM_icon.ico" type="image/png" />
-    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Radio</title>
@@ -13,49 +11,40 @@
     <br>
 
     <lecteur>
-        <audio controls autoplay>
+        <audio id="audioPlayer" controls autoplay>
             <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
             Votre navigateur ne supporte pas l'élément audio.
         </audio>
     </lecteur>
 
-    <div id="song-info">Loading...</div> <!-- Container to display current song info -->
+    <div id="currentSong">
+        <!-- Ici s'affichera le titre de la chanson actuelle -->
+    </div>
+    
+    <script>
+        // Fonction pour extraire le titre de la chanson actuelle
+        function getCurrentSong() {
+            // Récupérer la balise <td> contenant le texte "Current Song:"
+            var currentSongTD = document.querySelector('td:contains("Current Song:")');
+            
+            // Vérifier si la balise a été trouvée
+            if (currentSongTD) {
+                // Extraire le titre de la chanson du contenu de la balise
+                var currentSongText = currentSongTD.nextSibling.textContent;
+                
+                // Afficher le titre de la chanson dans l'élément avec l'ID 'currentSong'
+                document.getElementById('currentSong').innerText = currentSongText;
+            } else {
+                // Afficher un message d'erreur si la balise n'a pas été trouvée
+                document.getElementById('currentSong').innerText = "Titre de la chanson introuvable";
+            }
+        }
 
+        // Appel de la fonction pour extraire la chanson actuelle au chargement de la page
+        getCurrentSong();
+
+        // Rafraîchir toutes les 10 secondes pour obtenir la chanson actuelle
+        setInterval(getCurrentSong, 10000);
+    </script>
 </body>
-<style>
-    lecteur {
-        left: 42.5%;
-        bottom: 45%;
-        position: absolute;
-    }
-</style>
-<script>
-    function fetchSongInfo() {
-        fetch('https://lillefm.radio12345.com/index.php')
-            .then(response => {
-                // Afficher la réponse complète pour le débogage
-                console.log('Response from server:', response);
-                return response.text();
-            })
-            .then(data => {
-                // Afficher la réponse textuelle pour le débogage
-                console.log('Text response from server:', data);
-                // Extracting current song title from the HTML response
-                const titleStartIndex = data.indexOf('<h1>') + '<h1>'.length;
-                const titleEndIndex = data.indexOf('</h1>', titleStartIndex);
-                const currentSongTitle = data.substring(titleStartIndex, titleEndIndex);
-                // Updating the song info on the webpage
-                document.getElementById('song-info').textContent = `Now Playing: ${currentSongTitle}`;
-            })
-            .catch(error => {
-                console.error('Error fetching song info:', error);
-            });
-    }
-
-    // Fetch song info initially when the page loads
-    fetchSongInfo();
-
-    // Fetch song info every 30 seconds to keep it updated
-    setInterval(fetchSongInfo, 30000); // 30 seconds
-</script>
 </html>
