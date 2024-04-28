@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" sizes="192x192" href="Lille_FM_icon.ico" type="image/png" />
+    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Radio</title>
@@ -22,29 +24,36 @@
     </div>
     
     <script>
-        // Fonction pour extraire le titre de la chanson actuelle
+        // Fonction pour récupérer le titre de la chanson actuelle
         function getCurrentSong() {
-            // Récupérer la balise <td> contenant le texte "Current Song:"
-            var currentSongTD = document.querySelector('td:contains("Current Song:")');
-            
-            // Vérifier si la balise a été trouvée
-            if (currentSongTD) {
-                // Extraire le titre de la chanson du contenu de la balise
-                var currentSongText = currentSongTD.nextSibling.textContent;
-                
-                // Afficher le titre de la chanson dans l'élément avec l'ID 'currentSong'
-                document.getElementById('currentSong').innerText = currentSongText;
-            } else {
-                // Afficher un message d'erreur si la balise n'a pas été trouvée
-                document.getElementById('currentSong').innerText = "Titre de la chanson introuvable";
-            }
+            // URL de l'API pour obtenir les informations sur la chanson actuelle
+            var apiUrl = 'http://109.169.76.26:10341/';
+
+            // Faire une requête HTTP pour obtenir les informations sur la chanson
+            fetch(apiUrl)
+                .then(response => response.text())
+                .then(data => {
+                    // Afficher le titre de la chanson dans l'élément avec l'ID 'currentSong'
+                    document.getElementById('currentSong').innerText = data;
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des informations sur la chanson :', error);
+                });
         }
 
-        // Appel de la fonction pour extraire la chanson actuelle au chargement de la page
+        // Appel de la fonction pour récupérer la chanson actuelle au chargement de la page
         getCurrentSong();
 
         // Rafraîchir toutes les 10 secondes pour obtenir la chanson actuelle
         setInterval(getCurrentSong, 10000);
     </script>
 </body>
+    <style>
+        lecteur {
+            left: 42.5%;
+            bottom: 45%;
+            position: absolute;
+        }
+    </style>
 </html>
+
