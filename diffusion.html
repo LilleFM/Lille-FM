@@ -32,8 +32,14 @@
 <script>
     function fetchSongInfo() {
         fetch('https://lillefm.radio12345.com/index.php')
-            .then(response => response.text())
+            .then(response => {
+                // Afficher la réponse complète pour le débogage
+                console.log('Response from server:', response);
+                return response.text();
+            })
             .then(data => {
+                // Afficher la réponse textuelle pour le débogage
+                console.log('Text response from server:', data);
                 // Extracting current song title from the HTML response
                 const titleStartIndex = data.indexOf('<h1>') + '<h1>'.length;
                 const titleEndIndex = data.indexOf('</h1>', titleStartIndex);
@@ -53,4 +59,3 @@
     setInterval(fetchSongInfo, 30000); // 30 seconds
 </script>
 </html>
-
