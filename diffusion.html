@@ -6,26 +6,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Radio</title>
+    <style>
+        audio {
+            left: 42.5%;
+            bottom: 45%;
+            position: absolute;
+        }
+        #song-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <center><h1>Web Radio</h1></center>
 
     <br>
 
-<lecteur>
-<audio controls autoplay>
-  <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
-  Votre navigateur ne supporte pas l'élément audio.
-</audio>
-</lecteur>
-    
-</body>
-    <style>
-        lecteur {
-            left: 42.5%;
-            bottom: 45%;
-            position: absolute;
-        }
-    </style>
-</html>
+    <audio controls autoplay id="audio-player">
+      <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
+      Votre navigateur ne supporte pas l'élément audio.
+    </audio>
 
+    <div id="song-info">Now Playing: Loading...</div>
+
+    <script>
+        // Function to fetch current song info from the server
+        function fetchSongInfo() {
+            fetch('http://uk9freenew.listen2myradio.com:10341/admin.cgi')
+                .then(response => response.text())
+                .then(data => {
+                    // Extracting current song from the response
+                    const currentSong = data.match(/Current Song:\t(.+)/)[1];
+                    // Updating the song info on the webpage
+                    document.getElementById('song-info').textContent = `Now Playing: ${currentSong}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching song info:', error);
+                });
+        }
+
+        // Fetch song info initially when the page loads
+        fetchSongInfo();
+
+        // Fetch song info every 30 seconds to keep it updated
+        setInterval(fetchSongInfo, 30000); // 30 seconds
+    </script>
+</body>
+</html>
