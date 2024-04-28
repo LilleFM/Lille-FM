@@ -9,57 +9,44 @@
 </head>
 <body>
     <center><h1>Web Radio</h1></center>
-
     <br>
+    <div id="currentSong"></div>
 
-    <div id="currentSong"></div> <!-- Div pour afficher le titre de la chanson actuelle -->
-<lecteur>
     <audio controls autoplay>
         <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
         Votre navigateur ne supporte pas l'élément audio.
     </audio>
-    </lecteur>
-
     
-    <style>
-        lecteur {
-            left: 42.5%;
-            bottom: 45%;
-            position: absolute;
-        }
-    </style>
-
     <script>
-        // Fonction pour récupérer et afficher le titre de la chanson actuelle
-        async function getCurrentSong() {
-            try {
-                // Récupérer le contenu HTML de la page de la radio
-                const response = await fetch('https://lillefm.radio12345.com');
-                const html = await response.text();
+        function getCurrentSong() {
+            fetch('https://lillefm.radio12345.com')
+            .then(response => response.text())
+            .then(html => {
+                // Création d'un élément div pour faciliter le parsing du HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
 
-                // Créer un élément div pour manipuler le contenu HTML
-                const div = document.createElement('div');
-                div.innerHTML = html;
+                // Récupération du contenu de la ligne 49
+                const currentSongLine = doc.querySelectorAll('body > table > tbody > tr:nth-child(14) > td:nth-child(2) > font > b')[0].textContent;
 
-                // Trouver l'élément qui contient le titre de la chanson
-                const currentSongElement = div.querySelector('td:contains("Current Song:") + td');
-
-                // Extraire le titre de la chanson s'il existe
-                if (currentSongElement) {
-                    const currentSong = currentSongElement.textContent.trim();
-
-                    // Afficher le titre de la chanson dans la div
-                    document.getElementById('currentSong').innerText = currentSong;
-                } else {
-                    console.error('Impossible de trouver le titre de la chanson.');
-                }
-            } catch (error) {
-                console.error('Erreur lors de la récupération du titre de la chanson actuelle :', error);
-            }
+                // Affichage du titre de la chanson dans la div #currentSong
+                document.getElementById('currentSong').textContent = currentSongLine;
+            })
+            .catch(error => console.error('Erreur lors de la récupération de la chanson actuelle :', error));
         }
 
-        // Appeler la fonction pour récupérer le titre de la chanson au chargement de la page
+        // Appeler la fonction getCurrentSong pour récupérer la chanson actuelle au chargement de la page
         getCurrentSong();
+
+        // Actualiser la chanson actuelle toutes les 10 secondes
+        setInterval(getCurrentSong, 10000);
     </script>
 </body>
+<style>
+    lecteur {
+        left: 42.5%;
+        bottom: 45%;
+        position: absolute;
+    }
+</style>
 </html>
