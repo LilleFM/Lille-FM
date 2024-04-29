@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
+    <link rel="icon" sizes="192x192" href="Lille_FM_icon.ico" type="image/png" />
+    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lille FM - l'application</title>
-    <link rel="icon" sizes="192x192" href="Lille_FM_icon.ico" type="image/png" />
-    <link rel="stylesheet" href="styles_podcast.css">
+    <title>Web Radio</title>
 </head>
 <body>
-    <header>
-        <h1><center>L’application Lille FM</center></h1>
-    </header>
+    <center><h1>Écouter Lille FM</h1></center>
+
+    <br>
+
+<lecteur>
+    <center>
+<audio controls autoplay>
+  <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'élément audio.
+</audio>
+        </center>
+</lecteur>
+
+<elem_un><p>le lecteur est en bêta et n'est pas forcément 100% fonctionnel, mais vous pourrez toujours accéder à Lille FM via &nbsp<elem_de><a href="https://lillefm.radio12345.com/">ce lien : (cliquez ici)</a></elem_de></p></elem_un>
+
+    
 </body>
+    <style>
+        lecteur {
+            bottom: 45%;
+            position: absolute;
+            left: 50%;
+        	width: 18rem;
+        	margin-left: -9rem;
+        }
+
+        elem_un{
+            bottom: 3px;
+            left: 3px;
+            position: absolute;
+        }
+
+        elem_de{
+        }
+    </style>
+</html>
+
+
