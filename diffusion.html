@@ -26,9 +26,28 @@
         <p>Lille FM est hors antenne, mais nous revenons bientôt !</p>
     </div>
 
-    <div>
-        <p>Le lecteur est en bêta et n'est pas forcément 100% fonctionnel, mais vous pourrez toujours accéder à Lille FM via <a href="https://lillefm.radio12345.com/">ce lien</a>.</p>
-    </div>
+    <elem_un><p>le lecteur est en bêta et n'est pas forcément 100% fonctionnel, mais vous pourrez toujours accéder à Lille FM via &nbsp<elem_de><a href="https://lillefm.radio12345.com/">ce lien : (cliquez ici)</a></elem_de></p></elem_un>
+
+    
+</body>
+    <style>
+        lecteur {
+            bottom: 45%;
+            position: absolute;
+            left: 50%;
+        	width: 18rem;
+        	margin-left: -9rem;
+        }
+
+        elem_un{
+            bottom: 3px;
+            left: 3px;
+            position: absolute;
+        }
+
+        elem_de{
+        }
+    </style>
 
     <script>
         var audioPlayer = document.getElementById('audioPlayer');
