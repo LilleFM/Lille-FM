@@ -1,32 +1,36 @@
 <!DOCTYPE html>
+<html>
 <head> 
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" sizes="192x192" href="Lille_FM_icon.ico" type="image/png" />
     <title>Lille FM</title>
-    <header>
-        <centre>
-        <h1>Lille FM</h1>
-        <br>
-    </centre>
-    </header>
-<sheader>
-        <h3>The radio of the North</h3>
-</sheader>
 </head>
 <body>
     <elemde><img src="Lille_FM.png" height="250px" width="250px"></elemde>
     <br>
-<elemun><a href='https://lillefm.github.io/Lille-FM/diffusion.html'><button>Écoutez LilleFM</button></a></elemun>
-<elemtr><a href='podcast.html'><button>Podcasts</button></a></elemtr>
-<elemqu><a href="https://instagram.com/lillefm"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" height="80" width="80"></a></elemqu>
-<elemci><a href="https://discord.gg/uUBY76xy"><img src="https://upload.wikimedia.org/wikipedia/fr/4/4f/Discord_Logo_sans_texte.svg" height="80" width="80"></a></elemci>
-<elemsi><a href="https://lillefm.github.io/Lille-FM/appli_telecharger.html"><h3>l'application Lille FM</h3></a></elemsi>
-<elemail><img src="https://lillefm.github.io/Lille-FM/illustrations/mel.webp" heigh="25" width="30"></img>
-</elemail><elemail2><p>&nbsp &nbsp &nbsp &nbsp: regie.lille-fm@etik.com</p></elemail2>
-<elemtel><img src="https://lillefm.github.io/Lille-FM/illustrations/tel.webp" heigh="25" width="30"></img></elemtel>
-<elemtel2><p>&nbsp &nbsp &nbsp &nbsp: 07.67.64.53.78</p></elemtel2>
+    <elemun><a href='https://lillefm.github.io/Lille-FM/diffusion.html'><button>Écoutez LilleFM</button></a></elemun>
+    <elemtr><a href='podcast.html'><button>Podcasts</button></a></elemtr>
+    <elemqu><a href="https://instagram.com/lillefm"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" height="80" width="80"></a></elemqu>
+    <elemci><a href="https://discord.gg/uUBY76xy"><img src="https://upload.wikimedia.org/wikipedia/fr/4/4f/Discord_Logo_sans_texte.svg" height="80" width="80"></a></elemci>
+    <elemsi><a href="https://lillefm.github.io/Lille-FM/appli_telecharger.html"><h3>l'application Lille FM</h3></a></elemsi>
+    <elemail><img src="https://lillefm.github.io/Lille-FM/illustrations/mel.webp" height="25" width="30"></img></elemail>
+    <elemail2><p>&nbsp &nbsp &nbsp &nbsp: regie.lille-fm@etik.com</p></elemail2>
+    <elemtel><img src="https://lillefm.github.io/Lille-FM/illustrations/tel.webp" height="25" width="30"></img></elemtel>
+    <elemtel2><p>&nbsp &nbsp &nbsp &nbsp: 07.67.64.53.78</p></elemtel2>
     
-<style>
+    <script>
+        var clickCount = 0;
+
+        document.querySelector('elemde img').addEventListener('click', function() {
+            clickCount++; 
+
+            if (clickCount === 20) {
+                // Rediriger l'utilisateur vers une autre page
+                window.location.href = 'easter_egg.html';
+            }
+        });
+    </script>
+    <style>
     elemun {
         left: 22%;
         position: absolute;
@@ -122,3 +126,4 @@ a:active {
     
 </style>
 </body>
+</html>
