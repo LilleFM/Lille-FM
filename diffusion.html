@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,20 +33,24 @@
         var offlineMessage = document.getElementById('offlineMessage');
         var textMessage = document.getElementById('textMessage');
 
-        audioPlayer.addEventListener('playing', function() {
+        function hideTextMessage() {
             offlineMessage.style.display = 'none';
             textMessage.style.display = 'none';
-        });
+        }
 
-        audioPlayer.addEventListener('pause', function() {
+        function showOfflineMessage() {
             offlineMessage.style.display = 'block';
             textMessage.style.display = 'none';
-        });
+        }
 
-        audioPlayer.addEventListener('ended', function() {
-            offlineMessage.style.display = 'block';
-            textMessage.style.display = 'none';
-        });
+        function showTextMessage() {
+            offlineMessage.style.display = 'none';
+            textMessage.style.display = 'block';
+        }
+
+        audioPlayer.addEventListener('playing', hideTextMessage);
+        audioPlayer.addEventListener('pause', showTextMessage);
+        audioPlayer.addEventListener('ended', showOfflineMessage);
     </script>
 </body>
 </html>
