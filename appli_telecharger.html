@@ -10,9 +10,9 @@
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       background: linear-gradient(120deg, #2980b9, #3498db, #8e44ad);
       background-size: 600% 600%;
       animation: gradientBG 10s ease infinite;
@@ -36,6 +36,7 @@
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
     }
 
     img {
@@ -67,6 +68,23 @@
     button:hover {
       background-color: #27ae60;
     }
+
+    .preview-container {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .preview-container img {
+      width: 100%;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
@@ -74,6 +92,9 @@
     <img src="https://lillefm.github.io/Lille-FM/illustrations/download.png" alt="Logo Télécharger">
     <h1>Télécharger l'application</h1>
     <button onclick="downloadAPK()">Télécharger APK</button>
+  </div>
+  <div class="preview-container">
+    <img src="votre_image_preview.jpg" alt="Preview de l'application">
   </div>
   <script src="scriptappli.js"></script>
 </body>
