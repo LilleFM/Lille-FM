@@ -1,35 +1,53 @@
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6928875782056223" crossorigin="anonymous"></script>
+    <link rel="icon" sizes="192x192" href="Lille_FM_icon.ico" type="image/png" />
+    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Écouter Lille FM</title>
+    <title>Web Radio</title>
 </head>
 <body>
     <center><h1>Écouter Lille FM</h1></center>
 
     <br>
 
-    <audio id="audioPlayer" controls autoplay onplaying="showPlayer()" onpause="showOfflineMessage()" onended="showOfflineMessage()">
-        <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
-        Votre navigateur ne supporte pas l'élément audio.
-    </audio>
+    <div>
+        <audio id="audioPlayer" controls autoplay>
+            <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
+            Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+    </div>
 
-    <div id="offlineMessage" style="display: none;">
+    <div id="offlineMessage">
         <p>Lille FM est hors antenne, mais nous revenons bientôt !</p>
+    </div>
+
+    <div id="textMessage" style="display: none;">
+        <p>Le lecteur est en bêta et n'est pas forcément 100% fonctionnel, mais vous pourrez toujours accéder à Lille FM via <a href="https://lillefm.radio12345.com/">ce lien</a>.</p>
     </div>
 
     <script>
         var audioPlayer = document.getElementById('audioPlayer');
         var offlineMessage = document.getElementById('offlineMessage');
+        var textMessage = document.getElementById('textMessage');
 
-        function showPlayer() {
+        audioPlayer.addEventListener('playing', function() {
             offlineMessage.style.display = 'none';
-        }
+            textMessage.style.display = 'none';
+        });
 
-        function showOfflineMessage() {
+        audioPlayer.addEventListener('pause', function() {
             offlineMessage.style.display = 'block';
-        }
+            textMessage.style.display = 'none';
+        });
+
+        audioPlayer.addEventListener('ended', function() {
+            offlineMessage.style.display = 'block';
+            textMessage.style.display = 'none';
+        });
     </script>
 </body>
 </html>
