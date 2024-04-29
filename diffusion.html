@@ -22,7 +22,7 @@
         </center>
     </div>
 
-    <div id="offlineMessage">
+    <div id="offlineMessage" style="display: none;">
         <p>Lille FM est hors antenne, mais nous revenons bientôt !</p>
     </div>
 
@@ -44,10 +44,15 @@
         }
 
         function showTextMessage() {
-            document.getElementById('player').style.display = 'none';
-            document.getElementById('offlineMessage').style.display = 'none';
-            document.getElementById('textMessage').style.display = 'block';
+            var audioPlayer = document.getElementById('audioPlayer');
+            if (audioPlayer.paused || audioPlayer.ended) {
+                document.getElementById('player').style.display = 'none';
+                document.getElementById('offlineMessage').style.display = 'none';
+                document.getElementById('textMessage').style.display = 'block';
+            }
         }
+
+        showTextMessage(); // Appel initial pour afficher le texte si le lecteur audio est en pause ou terminé
     </script>
 </body>
 </html>
