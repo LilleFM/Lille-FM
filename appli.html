@@ -2,47 +2,48 @@
 <html lang="en">
 <head>
     <link rel="icon" sizes="192x192" href="Lille_FM_icon.ico" type="image/png" />
-    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Radio</title>
-</head>
-<body>
-    <center><h1>Écouter Lille FM</h1></center>
-
-    <br>
-
-<lecteur>
-    <center>
-<audio controls autoplay>
-  <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
-  Votre navigateur ne supporte pas l'élément audio.
-</audio>
-        </center>
-</lecteur>
-
-<elem_un><p>le lecteur est en bêta et n'est pas forcément 100% fonctionnel, mais vous pourrez toujours accéder à Lille FM via &nbsp<elem_de><a href="https://lillefm.radio12345.com/">ce lien : (cliquez ici)</a></elem_de></p></elem_un>
-
-    
-</body>
     <style>
-        lecteur {
-            bottom: 45%;
-            position: absolute;
-            left: 50%;
-        	width: 18rem;
-        	margin-left: -9rem;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        elem_un{
-            bottom: 3px;
-            left: 3px;
-            position: absolute;
+        header, main {
+            text-align: center;
+            padding: 20px;
         }
 
-        elem_de{
+        .player {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .info {
+            margin-top: 20px;
+            font-size: 14px;
         }
     </style>
+</head>
+<body>
+    <header>
+        <h1>Écouter Lille FM</h1>
+    </header>
+
+    <main>
+        <div class="player">
+            <audio controls autoplay>
+                <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
+                Votre navigateur ne supporte pas l'élément audio.
+            </audio>
+        </div>
+
+        <div class="info">
+            <p>Le lecteur est en bêta et n'est pas forcément 100% fonctionnel, mais vous pourrez toujours accéder à Lille FM via <a href="https://lillefm.radio12345.com/">ce lien</a>.</p>
+        </div>
+    </main>
+</body>
 </html>
-
-
