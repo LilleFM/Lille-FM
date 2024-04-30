@@ -54,6 +54,9 @@
         audioPlayer.addEventListener('pause', showTextMessage);
         audioPlayer.addEventListener('ended', showOfflineMessage);
     </script>
+    <script>
+// URL de l'API
+const url = 'http://192.168.1.27:9000/?pass=59922&action=playbackinfo';
     async function getSongTitle() {
     try {
         // Envoi de la requête GET à l'API
