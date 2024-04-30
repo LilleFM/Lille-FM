@@ -80,6 +80,50 @@
             })
             .catch(error => console.error("Erreur lors de la requête HTTP :", error));
     </script>
+    <div id="songTitle"></div>
+
+<script>
+// URL de l'API de base
+const baseUrl = 'https://352dc52b0aeada2f9988554f1937cb67.serveo.net';
+
+// Fonction pour extraire le titre de la chanson
+async function getSongTitle() {
+    try {
+        // Construction de l'URL complète en ajoutant les paramètres nécessaires
+        const url = `${baseUrl}/?pass=59922&action=playbackinfo`;
+        
+        // Envoi de la requête GET à l'API
+        const response = await fetch(url);
+        
+        // Vérification de la réponse
+        if (!response.ok) {
+            throw new Error('La requête a échoué');
+        }
+        
+        // Conversion de la réponse en texte
+        const xmlText = await response.text();
+        
+        // Analyse de la réponse XML
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        
+        // Extraction du titre de la chanson
+        const title = xmlDoc.querySelector('TRACK').getAttribute('TITLE');
+        
+        // Affichage du titre dans un élément HTML
+        const songTitleElement = document.getElementById('songTitle');
+        songTitleElement.textContent = 'Titre de la chanson actuellement jouée : ' + title;
+        
+        // Retour du titre
+        return title;
+    } catch (error) {
+        console.error('Une erreur s\'est produite :', error);
+    }
+}
+
+// Appel de la fonction pour extraire le titre de la chanson
+getSongTitle();
+</script>
        <style>
         lecteur {
             bottom: 45%;
