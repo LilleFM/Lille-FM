@@ -53,49 +53,40 @@
         audioPlayer.addEventListener('playing', hideTextMessage);
         audioPlayer.addEventListener('pause', showTextMessage);
         audioPlayer.addEventListener('ended', showOfflineMessage);
-    </script>
-<h1>Titre de la chanson actuellement jouée :</h1>
-    <p id="titreChanson"></p>
 
-    <script>
-        const fs = require('fs');
+        // Faire une requête HTTP pour obtenir le contenu du fichier titre.txt
+        fetch('titre.txt')
+            .then(response => response.text())
+            .then(data => {
+                const url = data.trim(); // Supprime les espaces blancs éventuels autour de l'URL
 
-        // Lecture de l'URL à partir du fichier titre.txt
-        fs.readFile('titre.txt', 'utf8', (err, data) => {
-            if (err) {
-                console.error("Erreur lors de la lecture du fichier titre.txt :", err);
-                return;
-            }
-            const url = data.trim(); // Supprime les espaces blancs éventuels autour de l'URL
-            console.log("URL lue depuis le fichier titre.txt :", url);
+                // Ajouter le chemin d'accès spécifique à chaque lien
+                const urlAvecParametres = `${url}/?pass=59922&action=playbackinfo`;
 
-            // Ajouter le chemin d'accès spécifique à chaque lien
-            const urlAvecParametres = `${url}/?pass=59922&action=playbackinfo`;
+                // Faire une requête HTTP pour obtenir les informations de la chanson actuellement jouée
+                return fetch(urlAvecParametres);
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Convertir la réponse en XML
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data, 'text/xml');
 
-            // Faire une requête HTTP pour obtenir les informations de la chanson actuellement jouée
-            fetch(urlAvecParametres)
-                .then(response => response.text())
-                .then(data => {
-                    // Convertir la réponse en XML
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, 'text/xml');
+                // Extraire le titre de la chanson actuellement jouée
+                const titreChanson = xml.querySelector('CurrentTrack TRACK').getAttribute('TITLE');
 
-                    // Extraire le titre de la chanson actuellement jouée
-                    const titreChanson = xml.querySelector('CurrentTrack TRACK').getAttribute('TITLE');
-
-                    // Mettre à jour le contenu de l'élément HTML avec le titre de la chanson
-                    document.getElementById('titreChanson').textContent = titreChanson;
-                })
-                .catch(error => console.error("Erreur lors de la requête HTTP :", error));
-        });
+                // Mettre à jour le contenu de l'élément HTML avec le titre de la chanson
+                document.getElementById('titreChanson').textContent = titreChanson;
+            })
+            .catch(error => console.error("Erreur lors de la requête HTTP :", error));
     </script>
        <style>
         lecteur {
             bottom: 45%;
             position: absolute;
             left: 50%;
-        	width: 18rem;
-        	margin-left: -9rem;
+            width: 18rem;
+            margin-left: -9rem;
         }
 
         elem_un{
@@ -109,3 +100,4 @@
     </style>
 </body>
 </html>
+
