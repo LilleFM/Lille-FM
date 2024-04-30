@@ -54,6 +54,40 @@
         audioPlayer.addEventListener('pause', showTextMessage);
         audioPlayer.addEventListener('ended', showOfflineMessage);
     </script>
+    async function getSongTitle() {
+    try {
+        // Envoi de la requête GET à l'API
+        const response = await fetch(url);
+        
+        // Vérification de la réponse
+        if (!response.ok) {
+            throw new Error('La requête a échoué');
+        }
+        
+        // Conversion de la réponse en texte
+        const xmlText = await response.text();
+        
+        // Analyse de la réponse XML
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        
+        // Extraction du titre de la chanson
+        const title = xmlDoc.querySelector('TRACK').getAttribute('TITLE');
+        
+        // Affichage du titre dans un élément HTML
+        const songTitleElement = document.getElementById('songTitle');
+        songTitleElement.textContent = 'Titre de la chanson actuellement jouée : ' + title;
+        
+        // Retour du titre
+        return title;
+    } catch (error) {
+        console.error('Une erreur s\'est produite :', error);
+    }
+}
+
+// Appel de la fonction pour extraire le titre de la chanson
+getSongTitle();
+</script>
        <style>
         lecteur {
             bottom: 45%;
