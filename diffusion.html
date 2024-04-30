@@ -13,22 +13,20 @@
 
     <br>
 
-    <lecteur>
+    <div id="lecteur">
         <center>
         <audio id="audioPlayer" controls autoplay>
             <source src="https://uk9freenew.listen2myradio.com/live.mp3?typeportmount=s1_10341_stream_1862423" type="audio/mpeg">
             Votre navigateur ne supporte pas l'élément audio.
         </audio>
-    <div id="songTitle"></div>
-    <div id="offlineMessage">
-        <p>Lille FM est hors antenne, mais nous revenons bientôt !</p>
+        <div id="songTitle"></div>
+        <div id="offlineMessage">
+            <p>Lille FM est hors antenne, mais nous revenons bientôt !</p>
+        </div>
+    </center>
     </div>
-</center>
- </lecteur>
 
-    
-        <elem_un><p>Le lecteur est en bêta et n'est pas forcément 100% fonctionnel, mais vous pourrez toujours accéder à Lille FM via <a href="https://lillefm.radio12345.com/">ce lien</a>.</p></elem_un>
-
+    <elem_un><p>Le lecteur est en bêta et n'est pas forcément 100% fonctionnel, mais vous pourrez toujours accéder à Lille FM via <a href="https://lillefm.radio12345.com/">ce lien</a>.</p></elem_un>
 
     <script>
         var audioPlayer = document.getElementById('audioPlayer');
@@ -54,78 +52,50 @@
         audioPlayer.addEventListener('pause', showTextMessage);
         audioPlayer.addEventListener('ended', showOfflineMessage);
 
-        // Faire une requête HTTP pour obtenir le contenu du fichier titre.txt
-        fetch('titre.txt')
-            .then(response => response.text())
-            .then(data => {
-                const url = data.trim(); // Supprime les espaces blancs éventuels autour de l'URL
+        // URL de l'API de base
+        const baseUrl = 'https://352dc52b0aeada2f9988554f1937cb67.serveo.net';
 
-                // Ajouter le chemin d'accès spécifique à chaque lien
-                const urlAvecParametres = `${url}/?pass=59922&action=playbackinfo`;
-
-                // Faire une requête HTTP pour obtenir les informations de la chanson actuellement jouée
-                return fetch(urlAvecParametres);
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Convertir la réponse en XML
+        // Fonction pour extraire le titre de la chanson
+        async function getSongTitle() {
+            try {
+                // Construction de l'URL complète en ajoutant les paramètres nécessaires
+                const url = `${baseUrl}/?pass=59922&action=playbackinfo`;
+                
+                // Envoi de la requête GET à l'API
+                const response = await fetch(url);
+                
+                // Vérification de la réponse
+                if (!response.ok) {
+                    throw new Error('La requête a échoué');
+                }
+                
+                // Conversion de la réponse en texte
+                const xmlText = await response.text();
+                
+                // Analyse de la réponse XML
                 const parser = new DOMParser();
-                const xml = parser.parseFromString(data, 'text/xml');
+                const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                
+                // Extraction du titre de la chanson
+                const title = xmlDoc.querySelector('TRACK').getAttribute('TITLE');
+                
+                // Affichage du titre dans un élément HTML
+                const songTitleElement = document.getElementById('songTitle');
+                songTitleElement.textContent = 'Titre de la chanson actuellement jouée : ' + title;
+                
+                // Retour du titre
+                return title;
+            } catch (error) {
+                console.error('Une erreur s\'est produite :', error);
+            }
+        }
 
-                // Extraire le titre de la chanson actuellement jouée
-                const titreChanson = xml.querySelector('CurrentTrack TRACK').getAttribute('TITLE');
-
-                // Mettre à jour le contenu de l'élément HTML avec le titre de la chanson
-                document.getElementById('titreChanson').textContent = titreChanson;
-            })
-            .catch(error => console.error("Erreur lors de la requête HTTP :", error));
+        // Appel de la fonction pour extraire le titre de la chanson
+        getSongTitle();
     </script>
 
-
-<script>
-// URL de l'API de base
-const baseUrl = 'https://352dc52b0aeada2f9988554f1937cb67.serveo.net';
-
-// Fonction pour extraire le titre de la chanson
-async function getSongTitle() {
-    try {
-        // Construction de l'URL complète en ajoutant les paramètres nécessaires
-        const url = `${baseUrl}/?pass=59922&action=playbackinfo`;
-        
-        // Envoi de la requête GET à l'API
-        const response = await fetch(url);
-        
-        // Vérification de la réponse
-        if (!response.ok) {
-            throw new Error('La requête a échoué');
-        }
-        
-        // Conversion de la réponse en texte
-        const xmlText = await response.text();
-        
-        // Analyse de la réponse XML
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-        
-        // Extraction du titre de la chanson
-        const title = xmlDoc.querySelector('TRACK').getAttribute('TITLE');
-        
-        // Affichage du titre dans un élément HTML
-        const songTitleElement = document.getElementById('songTitle');
-        songTitleElement.textContent = 'Titre de la chanson actuellement jouée : ' + title;
-        
-        // Retour du titre
-        return title;
-    } catch (error) {
-        console.error('Une erreur s\'est produite :', error);
-    }
-}
-
-// Appel de la fonction pour extraire le titre de la chanson
-getSongTitle();
-</script>
-       <style>
-        lecteur {
+    <style>
+        #lecteur {
             bottom: 45%;
             position: absolute;
             left: 50%;
@@ -144,4 +114,3 @@ getSongTitle();
     </style>
 </body>
 </html>
-
