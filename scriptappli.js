@@ -1,5 +1,5 @@
 function downloadAPK() {
-    // Remplacez "url_du_fichier.apk" par l'URL réelle de votre fichier APK sur le serveur
+    // lien de l'emplacement du fichier apk : 
     var url = "https://lilegalaxie.netlify.app/Lille_FM.apk";
     
     // Crée un élément <a> invisible
