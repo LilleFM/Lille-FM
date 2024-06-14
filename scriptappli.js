@@ -11,7 +11,7 @@ function downloadAPK() {
     a.href = url;
   
     // Définit le nom de fichier pour le téléchargement
-    a.download = 'Lille FM.apk';
+    a.download = 'LileGalaxie.apk';
   
     // Simule un clic sur l'élément <a> pour déclencher le téléchargement
     a.click();
