@@ -29,7 +29,49 @@
     <elemtel><img src="https://lilegalaxie.netlify.app/illustrations/tel.webp" height="28" width="28"></img></elemtel>
     <elemtel2><p>&nbsp &nbsp &nbsp &nbsp: 07.67.64.53.78</p></elemtel2>
     <elemtext><p>nous contacter :</p></elemtext>
-    
+        <div id="header">
+        <div style="float: right; padding-top: 10px;">
+            <div id="user-info" style="display: none;">
+                Logged in as <span id="username"></span> | <a id="logout-link" href="http://192.168.1.148:5000/logout">Logout</a>
+            </div>
+            <div id="login-link">
+                <a href="http://192.168.1.148:5000/static/login.html">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bloc pour le contenu spécifique à chaque page -->
+    <div id="content">
+        <!-- Ce bloc sera rempli par le contenu spécifique à chaque page -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Script JavaScript pour gérer l'affichage dynamique -->
+    <script>
+        // Fonction pour vérifier si un utilisateur est connecté
+        function checkLoggedIn() {
+            fetch('/check_login_status')  // Endpoint Flask pour vérifier l'état de connexion
+                .then(response => response.json())
+                .then(data => {
+                    if (data.logged_in) {
+                        document.getElementById('user-info').style.display = 'block';
+                        document.getElementById('login-link').style.display = 'none';
+                        document.getElementById('username').textContent = data.username;
+                    } else {
+                        document.getElementById('user-info').style.display = 'none';
+                        document.getElementById('login-link').style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking login status:', error);
+                });
+        }
+
+        // Appeler la fonction au chargement de la page
+        window.onload = function() {
+            checkLoggedIn();
+        };
+    </script>
     <script>
         var clickCount = 0;
 
