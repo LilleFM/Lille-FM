@@ -50,7 +50,7 @@
     <script>
         // Fonction pour vérifier si un utilisateur est connecté
         function checkLoggedIn() {
-            fetch('/check_login_status')  // Endpoint Flask pour vérifier l'état de connexion
+            fetch('https://0648d8838c6035deb556a38f5f08a841.serveo.net/check_login_status')  // Endpoint Flask pour vérifier l'état de connexion
                 .then(response => response.json())
                 .then(data => {
                     if (data.logged_in) {
