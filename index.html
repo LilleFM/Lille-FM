@@ -47,31 +47,40 @@
     <div id="content">
     </div>
 
-    <script>
-        // Fonction pour vérifier si un utilisateur est connecté
-        function checkLoggedIn() {
-            fetch('https://0648d8838c6035deb556a38f5f08a841.serveo.net/check_login_status')  // Endpoint Flask pour vérifier l'état de connexion
-                .then(response => response.json())
-                .then(data => {
-                    if (data.logged_in) {
-                        document.getElementById('user-info').style.display = 'block';
-                        document.getElementById('login-link').style.display = 'none';
-                        document.getElementById('username').textContent = data.username;
-                    } else {
-                        document.getElementById('user-info').style.display = 'none';
-                        document.getElementById('login-link').style.display = 'block';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error checking login status:', error);
-                });
-        }
+<script>
+    // Fonction pour vérifier si un utilisateur est connecté
+    function checkLoggedIn() {
+        console.log('Checking login status...');  // Ajout du log
+        fetch('https://0648d8838c6035deb556a38f5f08a841.serveo.net/check_login_status')  // Endpoint Flask pour vérifier l'état de connexion
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Login status:', data);  // Log the response for debugging
+                if (data.logged_in) {
+                    console.log('User is logged in');
+                    document.getElementById('user-info').style.display = 'block';
+                    document.getElementById('login-link').style.display = 'none';
+                    document.getElementById('username').textContent = data.username;
+                } else {
+                    console.log('User is not logged in');
+                    document.getElementById('user-info').style.display = 'none';
+                    document.getElementById('login-link').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error checking login status:', error);
+            });
+    }
 
-        // Appeler la fonction au chargement de la page
-        window.onload = function() {
-            checkLoggedIn();
-        };
-    </script>
+    // Appeler la fonction au chargement de la page
+    window.onload = function() {
+        checkLoggedIn();
+    };
+</script>
 
 
      
